@@ -31,11 +31,11 @@ public class ControlsTutorial : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-		}
+		// if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+		// {
+		// 	Cursor.lockState = CursorLockMode.Locked;
+		// 	Cursor.visible = false;
+		// }
 		if (Input.GetKeyDown("escape"))
 		{
 			Cursor.lockState = CursorLockMode.Locked;
