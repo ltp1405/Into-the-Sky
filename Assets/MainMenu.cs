@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("3rdPerson+Fly");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("3rdPerson+Fly 1");
     }
 
     public void QuitGame()
