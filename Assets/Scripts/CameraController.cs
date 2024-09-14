@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform followTarget;
     [SerializeField] float rotationSpeed = 2f;
     [SerializeField] float distance = 5;
-    [SerializeField] float minVerticalAngle = -45;
+    [SerializeField] float minVerticalAngle = -10;
     [SerializeField] float maxVerticalAngle = 45;
     [SerializeField] Vector2 framingOffset;
     [SerializeField] bool invertX;
@@ -37,4 +37,6 @@ public class CameraController : MonoBehaviour
         transform.position = focusPosition - targetRotation * new Vector3(0, 0, distance);
         transform.rotation= targetRotation;
     }
+    public Quaternion PlanarRotation => Quaternion.Euler(0, rotationY, 0);
+
 }
