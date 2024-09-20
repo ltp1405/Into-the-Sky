@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameOverTrigger : MonoBehaviour
 {
+	public static UnityAction OnGameOver;
+
 	public GameObject gameOverText;
 
 	private GameObject player;
@@ -19,6 +22,7 @@ public class GameOverTrigger : MonoBehaviour
 		if (other.gameObject == player)
 		{
 			gameOverText.gameObject.SetActive(true);
+			OnGameOver?.Invoke();
 		}
 	}
 

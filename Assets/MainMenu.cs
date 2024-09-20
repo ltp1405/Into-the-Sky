@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Invector.vCharacterController;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class MainMenu : MonoBehaviour
     private vThirdPersonInput vThirdPersonInput;
     private vThirdPersonController vThirdPersonController;
     public BackgroundMusicManager musicManager;
+    public PlayerSaveManager saveManager;
 
     void Awake()
     {
@@ -18,34 +18,49 @@ public class MainMenu : MonoBehaviour
         vThirdPersonController = player.GetComponent<vThirdPersonController>();
     }
 
+    void Start()
+    {
+        StartMenu();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StartMenu();
+        }
+    }
+
     public void EnablePlayerBehaviours()
     {
         vThirdPersonInput.enabled = true;
-        vThirdPersonController.enabled = true; 
     }
 
-    void DisablePlayerBehaviours()
+    public void DisablePlayerBehaviours()
     {
         vThirdPersonInput.enabled = false;
-        vThirdPersonController.enabled = false; 
         vThirdPersonController.StopRunningSound(); 
     }
 
-    void Start()
+    public void StartMenu()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         DisablePlayerBehaviours();
+        mainMenu.SetActive(true);
+        saveManager.SaveInfo();
+        Time.timeScale = 0;
     }
 
     public void PlayGame()
     {
-        mainMenu.SetActive(false);
-        EnablePlayerBehaviours();
+        Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        EnablePlayerBehaviours();
+        mainMenu.SetActive(false);
+        saveManager.LoadInfo();
         musicManager.RestartBackgroundMusic();
-        // UnityEngine.SceneManagement.SceneManager.LoadScene("Playground++");
     }
 
     public void QuitGame()
