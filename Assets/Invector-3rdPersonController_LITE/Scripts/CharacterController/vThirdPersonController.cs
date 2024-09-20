@@ -4,6 +4,102 @@ namespace Invector.vCharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        public AudioSource runSoundSource;  
+        public AudioClip runSound;          
+        public float baseRunSoundPitch = 1f; 
+        public float sprintPitchMultiplier = 1.5f; 
+        public float speedThreshold = 0.1f; 
+        public LayerMask obstacleLayers;     
+        public float obstacleCheckDistance = 1f; 
+        private Rigidbody rb;
+        private bool isRunningSoundPlaying = false;
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        private void Update()
+        {
+            ControlRunningSound();
+        }
+        public void StopRunningSound()
+        {
+            if (isRunningSoundPlaying)
+            {
+                runSoundSource.Stop();
+                isRunningSoundPlaying = false;
+            }
+        }
+        private void ControlRunningSound()
+        {
+            float speed = rb.velocity.magnitude;
+
+            if (speed < speedThreshold || IsBlockedByObstacle())
+            {
+                if (isRunningSoundPlaying)
+                {
+                    runSoundSource.Stop();
+                    isRunningSoundPlaying = false;
+                }
+                return;
+            }
+            if (!isGrounded)
+            {
+                if (isRunningSoundPlaying)
+                {
+                    runSoundSource.Stop();
+                    isRunningSoundPlaying = false;
+                }
+                return;
+            }
+            if (!isRunningSoundPlaying && isGrounded)
+            {
+                runSoundSource.pitch = isSprinting ? baseRunSoundPitch * sprintPitchMultiplier : baseRunSoundPitch;
+                runSoundSource.clip = runSound;
+                runSoundSource.loop = true;
+                runSoundSource.Play();
+                isRunningSoundPlaying = true;
+            }
+            else if (isRunningSoundPlaying)
+            {
+                runSoundSource.pitch = isSprinting ? baseRunSoundPitch * sprintPitchMultiplier : baseRunSoundPitch;
+            }
+        }
+        private bool IsBlockedByObstacle()
+        {
+            Ray ray = new Ray(transform.position + Vector3.up * 0.5f, transform.forward);
+            float rayDistance = 1.0f; 
+            return Physics.Raycast(ray, rayDistance, obstacleLayers);
+        }
+
+        public virtual void Sprint(bool value)
+        {
+            var sprintConditions = (input.sqrMagnitude > 0.1f && isGrounded &&
+                !(isStrafing && !strafeSpeed.walkByDefault && (horizontalSpeed >= 0.5 || horizontalSpeed <= -0.5 || verticalSpeed <= 0.1f)));
+
+            if (value && sprintConditions)
+            {
+                if (input.sqrMagnitude > 0.1f)
+                {
+                    if (isGrounded && useContinuousSprint)
+                    {
+                        isSprinting = !isSprinting;
+                    }
+                    else if (!isSprinting)
+                    {
+                        isSprinting = true;
+                    }
+                }
+                else if (!useContinuousSprint && isSprinting)
+                {
+                    isSprinting = false;
+                }
+            }
+            else if (isSprinting)
+            {
+                isSprinting = false;
+            }
+        }
+
         public virtual void ControlAnimatorRootMotion()
         {
             if (!this.enabled) return;
@@ -56,7 +152,7 @@ namespace Invector.vCharacterController
 
         public virtual void UpdateMoveDirection(Transform referenceTransform = null)
         {
-            if (input.magnitude <= 0.01)
+            if (input.magnitude <= 0.01f)
             {
                 moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
                 return;
@@ -75,35 +171,6 @@ namespace Invector.vCharacterController
             else
             {
                 moveDirection = new Vector3(inputSmooth.x, 0, inputSmooth.z);
-            }
-        }
-
-        public virtual void Sprint(bool value)
-        {
-            var sprintConditions = (input.sqrMagnitude > 0.1f && isGrounded &&
-                !(isStrafing && !strafeSpeed.walkByDefault && (horizontalSpeed >= 0.5 || horizontalSpeed <= -0.5 || verticalSpeed <= 0.1f)));
-
-            if (value && sprintConditions)
-            {
-                if (input.sqrMagnitude > 0.1f)
-                {
-                    if (isGrounded && useContinuousSprint)
-                    {
-                        isSprinting = !isSprinting;
-                    }
-                    else if (!isSprinting)
-                    {
-                        isSprinting = true;
-                    }
-                }
-                else if (!useContinuousSprint && isSprinting)
-                {
-                    isSprinting = false;
-                }
-            }
-            else if (isSprinting)
-            {
-                isSprinting = false;
             }
         }
 
