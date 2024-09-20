@@ -7,10 +7,11 @@ using UnityEngine.Events;
 public class GameOverTrigger : MonoBehaviour
 {
 	public static UnityAction OnGameOver;
-
 	public GameObject gameOverText;
 
 	private GameObject player;
+	public TextMeshProUGUI timeTextMesh;
+	public PlayerSaveManager saveManager;
 
 	void Awake()
 	{
@@ -21,9 +22,17 @@ public class GameOverTrigger : MonoBehaviour
 	{
 		if (other.gameObject == player)
 		{
-			gameOverText.gameObject.SetActive(true);
 			OnGameOver?.Invoke();
+			gameOverText.gameObject.SetActive(true);
+			timeTextMesh.text = "Time spent: " + ((float) saveManager.besttime).ToString("F2") + " seconds";
+			StartCoroutine(EndGame());
 		}
+	}
+
+	IEnumerator EndGame()
+	{
+		yield return new WaitForSeconds(5);
+		gameOverText.gameObject.SetActive(false);
 	}
 
 	// void OnTriggerExit(Collider other)

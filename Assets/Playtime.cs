@@ -5,10 +5,11 @@ using UnityEngine.Events;
 
 public class Playtime : MonoBehaviour
 {
-    public float playtime = 0;
+    public float playtime;
 
     void Update()
     {
         playtime += Time.deltaTime;
+        Debug.Log("Playtime: " + playtime);
     }
 }
