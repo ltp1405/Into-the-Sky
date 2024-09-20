@@ -16,7 +16,14 @@ Players take control of a character in a third-person view, aiming to keep climb
 - Unity Version: 2022.3.29f1
 
 ## Resources References:
-- [3rd Person Controller + Fly Mdoe](https://assetstore.unity.com/packages/templates/systems/3rd-person-controller-fly-mode-28647)
 - [PBR - Hospital Horror Pack](https://assetstore.unity.com/packages/3d/environments/pbr-hospital-horror-pack-free-80117)
 - [Sci-Fi Construction Kit (Modular)](https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction-kit-modular-159280)
 - [Sofa Set](https://assetstore.unity.com/packages/3d/props/sofa-set-260566)
+- [Flooded Grounds](https://assetstore.unity.com/packages/3d/environments/flooded-grounds-48529)
+- [FreeFlyCamera](https://assetstore.unity.com/packages/tools/camera/free-fly-camera-140739)
+- [RPG Buttons](https://assetstore.unity.com/packages/2d/gui/icons/2d-rpg-button-7-278861)
+- [Third Person Controller - Basic Locomotion](https://assetstore.unity.com/packages/tools/game-toolkits/third-person-controller-basic-locomotion-free-82048)
+- [Low Poly Dungeons Lite](https://assetstore.unity.com/packages/3d/environments/dungeons/low-poly-dungeons-lite-177937)
+- [Low Poly Atmospheric Locations Pack](https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-atmospheric-locations-pack-278928)
+- [Particle Ingredient Pack](https://assetstore.unity.com/packages/vfx/particles/particle-ingredient-pack-38436)
+- [Sci-Fi Construction Kit (Modular)](https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction-kit-modular-159280)
